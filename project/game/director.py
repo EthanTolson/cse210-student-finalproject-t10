@@ -39,14 +39,14 @@ class Director(arcade.View):
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
-        self.text = f'x # Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
+        self.text = f'x' # Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
         self.player.setlastEvent(self.levent)
         self.scroll_to_player()
 
     def scroll_to_player(self):
         position = self.player.center_x - self.window.width / 2, \
             self.player.center_y - self.window.height / 2
-        self.camera_sprites.move_to(position, .05)
+        self.camera_sprites.move_to(position, .75)
 
     def on_resize(self, width: int, height: int):
         self.camera_sprites.resize(int(width), int(height))
@@ -82,8 +82,8 @@ class Director(arcade.View):
             x = x + self.player.center_x - self.window.width/2
             y = y + self.player.center_y - self.window.height/2
 
-            self.player.change_x = 5 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
-            self.player.change_y = 5 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+            self.player.change_x = 7 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+            self.player.change_y = 7 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
 
             self.levent.set_x(x)
             self.levent.set_y(y)
