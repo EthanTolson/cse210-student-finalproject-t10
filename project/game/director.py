@@ -15,10 +15,14 @@ class Director(arcade.View):
         self.background = None
         self.all_sprites = arcade.SpriteList()
 
+        self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
+        #self.camera_gui = arcade.Camera(const.SCREEN_WIDTH, const.SCREEN_HEIGHT)
+
 
     def on_draw(self):
 
         arcade.start_render()
+        self.camera_sprites.use()
         arcade.draw_lrwh_rectangle_textured(0,0,self.window.width, self.window.height, self.background)
         self.all_sprites.draw()
 
@@ -27,6 +31,7 @@ class Director(arcade.View):
 
         if self.map:
             arcade.draw_text("This is a place holder for the map", self.window.width/2, self.window.height/2, arcade.color.WHITE, 20)
+        
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
@@ -37,7 +42,17 @@ class Director(arcade.View):
                     >= self.player_u.center_y - i):
                 self.player_u.change_x = 0
                 self.player_u.change_y = 0
-        
+        self.scroll_to_player()
+
+    def scroll_to_player(self):
+        position = self.player_u.center_x - self.window.width / 2, \
+            self.player_u.center_y - self.window.height / 2
+        self.camera_sprites.move_to(position, .05)
+
+    def on_resize(self, width: int, height: int):
+        self.camera_sprites.resize(int(width), int(height))
+        self.camera_gui.resize(int(width), int(height))
+
     def setup(self):
         self.background = arcade.load_texture(const.RESOURCE_PATH +"images/background.png")
 
@@ -80,6 +95,8 @@ class Director(arcade.View):
             #     self.player_u.change_x = -ratio * 10#(x- self.player_u.center_x ) /100
             # else:
             #     self.player_u.change_x = ratio * 10#(x- self.player_u.center_x ) /100
+            x = x + self.player_u.center_x - self.window.width/2
+            y = y + self.player_u.center_y - self.window.height/2
             self.player_u.change_x = (x- self.player_u.center_x ) /100
             self.player_u.change_y = (y- self.player_u.center_y ) /100
             self.levent.set_x(x)

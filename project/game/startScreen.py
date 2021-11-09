@@ -16,7 +16,7 @@ class StartScreen(arcade.View):
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
-        if _button == arcade.MOUSE_BUTTON_LEFT:
+        if _button == arcade.MOUSE_BUTTON_MIDDLE:
             game_view = director.Director()
             game_view.setup()
             self.window.show_view(game_view)
