@@ -30,7 +30,7 @@ class Director(arcade.View):
             arcade.draw_text(self.text, self.levent.get_x(), self.levent.get_y(), arcade.color.WHITE, 20)
 
         if self.map:
-            arcade.draw_text("This is a place holder for the map", self.window.width/2, self.window.height/2, arcade.color.WHITE, 20)
+            arcade.draw_text("This is a place holder for the map", self.player_u.center_x, self.player_u.center_y, arcade.color.WHITE, 20, anchor_x = "center")
         
 
     def on_update(self, delta_time: float):
