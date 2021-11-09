@@ -35,7 +35,7 @@ class Director(arcade.View):
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
-        self.text = f'x Last click x = {self.levent.get_x()} y = {self.levent.get_y()}'
+        self.text = f'x Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
         for i in range(0, 2):
             if self.levent.get_x() != None and (self.levent.get_x() <= self.player_u.center_x + i and self.levent.get_x() \
                 >= self.player_u.center_x - i) and(self.levent.get_y() <= self.player_u.center_y + i and self.levent.get_y() \
@@ -51,16 +51,10 @@ class Director(arcade.View):
 
     def on_resize(self, width: int, height: int):
         self.camera_sprites.resize(int(width), int(height))
-        self.camera_gui.resize(int(width), int(height))
+        #self.camera_gui.resize(int(width), int(height))
 
     def setup(self):
         self.background = arcade.load_texture(const.RESOURCE_PATH +"images/background.png")
-
-        for i in range(0,3):
-            self.player = arcade.Sprite(const.RESOURCE_PATH + "images/img.png", const.SCALING)
-            self.player.center_y = i * 300 + 200
-            self.player.left = i * 300 + 100
-            self.all_sprites.append(self.player)
 
         self.player_u = arcade.Sprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
         self.player_u.center_y = 40
