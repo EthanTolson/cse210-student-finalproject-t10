@@ -13,7 +13,7 @@ class StartScreen(arcade.View):
         arcade.draw_text("Controls:", self.window.width / 2 , self.window.height / 2 - 60, 
             arcade.color.PURPLE, font_size=40, anchor_x="center")
 
-        arcade.draw_text("Right Click: move your character to the click.\nTAB(Hold): Map.\nESC = Quit\nF: Toggle Fullscreen", self.window.width / 2 , self.window.height / 2 - 110, 
+        arcade.draw_text("Right Click: move your character to the click.\nQ + Left Click : Ability 1\nTAB(Hold): Map.\nESC = Quit\nF: Toggle Fullscreen", self.window.width / 2 , self.window.height / 2 - 110, 
             arcade.color.PURPLE, font_size=30, anchor_x="center", multiline=True, width = 600)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):

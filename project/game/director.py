@@ -17,7 +17,8 @@ class Director(arcade.View):
         self.background = None
         self.abilitySprites = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
-
+        self.abilityUsedBool = False
+        self.key = None
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
         #self.camera_gui = arcade.Camera(const.SCREEN_WIDTH, const.SCREEN_HEIGHT)
 
@@ -71,6 +72,9 @@ class Director(arcade.View):
             self.map = not self.map
         elif symbol == arcade.key.ESCAPE:
             arcade.close_window()
+        elif symbol == arcade.key.Q:
+            self.abilityUsedBool = not self.abilityUsedBool
+            self.key = arcade.key.Q
 
     def on_key_release(self, symbol: int, modifiers: int):
         if symbol == arcade.key.TAB:
@@ -87,3 +91,20 @@ class Director(arcade.View):
 
             self.levent.set_x(x)
             self.levent.set_y(y)
+
+        if button == arcade.MOUSE_BUTTON_LEFT and self.abilityUsedBool:
+            x = x + self.player.center_x - self.window.width/2
+            y = y + self.player.center_y - self.window.height/2
+            self.createAbility(x, y, self.key)
+            self.abilityUsedBool = False
+            self.key = None
+    
+    def createAbility(self, x, y, key = None):
+        self.qAbility = abilitySprite.AbilitySprite(const.RESOURCE_PATH +"images/img.png", 1/64)
+        self.qAbility.setPositionUsed(self.player.center_x, self.player.center_y)
+        
+        self.qAbility.center_x = self.player.center_x
+        self.qAbility.center_y = self.player.center_y
+        self.all_sprites.append(self.qAbility)
+        self.qAbility.change_x = 5 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+        self.qAbility.change_y = 5 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
