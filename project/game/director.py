@@ -1,6 +1,7 @@
 import arcade
 from game import constants as const
 from game import playerSprite as pS
+from game import abilitySprite
 from game import lastEvent
 
 
@@ -30,23 +31,24 @@ class Director(arcade.View):
             arcade.draw_text(self.text, self.levent.get_x(), self.levent.get_y(), arcade.color.WHITE, 20)
 
         if self.map:
-            arcade.draw_text("This is a place holder for the map", self.player_u.center_x, self.player_u.center_y, arcade.color.WHITE, 20, anchor_x = "center")
+            arcade.draw_text("This is a place holder for the map", self.player.center_x, self.player.center_y, arcade.color.WHITE, 20, anchor_x = "center")
         
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
         self.text = f'x Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
-        for i in range(0, 2):
-            if self.levent.get_x() != None and (self.levent.get_x() <= self.player_u.center_x + i and self.levent.get_x() \
-                >= self.player_u.center_x - i) and(self.levent.get_y() <= self.player_u.center_y + i and self.levent.get_y() \
-                    >= self.player_u.center_y - i):
-                self.player_u.change_x = 0
-                self.player_u.change_y = 0
+        self.player.getlastEvent(self.levent)
+        # for i in range(0, 2):
+        #     if self.levent.get_x() != None and (self.levent.get_x() <= self.player_u.center_x + i and self.levent.get_x() \
+        #         >= self.player_u.center_x - i) and(self.levent.get_y() <= self.player_u.center_y + i and self.levent.get_y() \
+        #             >= self.player_u.center_y - i):
+        #         self.player_u.change_x = 0
+        #         self.player_u.change_y = 0
         self.scroll_to_player()
 
     def scroll_to_player(self):
-        position = self.player_u.center_x - self.window.width / 2, \
-            self.player_u.center_y - self.window.height / 2
+        position = self.player.center_x - self.window.width / 2, \
+            self.player.center_y - self.window.height / 2
         self.camera_sprites.move_to(position, .05)
 
     def on_resize(self, width: int, height: int):
@@ -55,11 +57,17 @@ class Director(arcade.View):
 
     def setup(self):
         self.background = arcade.load_texture(const.RESOURCE_PATH +"images/background.png")
+        
+        self.player = pS.playerSprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
 
-        self.player_u = arcade.Sprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
-        self.player_u.center_y = 40
-        self.player_u.left = 10
-        self.all_sprites.append(self.player_u )
+        # self.player_u = arcade.Sprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
+        # self.player_u.center_y = 40
+        # self.player_u.left = 10
+        # self.all_sprites.append(self.player_u )
+        self.player.center_y = 40
+        self.player.left = 10
+        self.all_sprites.append(self.player)
+
 
         self.text = "If you see this something is wrong."
         
@@ -89,9 +97,9 @@ class Director(arcade.View):
             #     self.player_u.change_x = -ratio * 10#(x- self.player_u.center_x ) /100
             # else:
             #     self.player_u.change_x = ratio * 10#(x- self.player_u.center_x ) /100
-            x = x + self.player_u.center_x - self.window.width/2
-            y = y + self.player_u.center_y - self.window.height/2
-            self.player_u.change_x = (x- self.player_u.center_x ) /100
-            self.player_u.change_y = (y- self.player_u.center_y ) /100
+            x = x + self.player.center_x - self.window.width/2
+            y = y + self.player.center_y - self.window.height/2
+            self.player.change_x = (x- self.player.center_x ) /100
+            self.player.change_y = (y- self.player.center_y ) /100
             self.levent.set_x(x)
             self.levent.set_y(y)
