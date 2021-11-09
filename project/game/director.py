@@ -4,12 +4,12 @@ from game import playerSprite as pS
 from game import lastEvent
 
 
-class Director(arcade.Window):
+class Director(arcade.View):
     
     def __init__(self):
 
-        super().__init__(const.SCREEN_WIDTH, const.SCREEN_HEIGHT, const.SCREEN_TITLE, resizable = True, fullscreen= True)
-        
+        super().__init__()
+
         self.levent = lastEvent.lastEvent(None, None)
         self.map = False
         self.background = None
@@ -19,14 +19,14 @@ class Director(arcade.Window):
     def on_draw(self):
 
         arcade.start_render()
-        arcade.draw_lrwh_rectangle_textured(0,0,self.width, self.height, self.background)
+        arcade.draw_lrwh_rectangle_textured(0,0,self.window.width, self.window.height, self.background)
         self.all_sprites.draw()
 
         if self.levent.get_x() != None:
             arcade.draw_text(self.text, self.levent.get_x(), self.levent.get_y(), arcade.color.WHITE, 20)
 
         if self.map:
-            arcade.draw_text("This is a place holder for the map", self.width/2, self.height/2, arcade.color.WHITE, 20)
+            arcade.draw_text("This is a place holder for the map", self.window.width/2, self.window.height/2, arcade.color.WHITE, 20)
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
@@ -57,7 +57,7 @@ class Director(arcade.Window):
 
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.F:
-            self.set_fullscreen(not self.fullscreen)
+            self.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.TAB:
             self.map = not self.map
         elif symbol == arcade.key.ESCAPE:
