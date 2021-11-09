@@ -11,7 +11,7 @@ class playerSprite(arcade.Sprite):
 
         super().update()
 
-        for i in range(0, 3):
+        for i in range(0, 4):
             if self.levent.get_x() != None and (self.levent.get_x() <= self.center_x + i and self.levent.get_x() \
                 >= self.center_x - i) and(self.levent.get_y() <= self.center_y + i and self.levent.get_y() \
                     >= self.center_y - i):

@@ -25,26 +25,21 @@ class Director(arcade.View):
 
         arcade.start_render()
         self.camera_sprites.use()
-        arcade.draw_lrwh_rectangle_textured(0,0,self.window.width, self.window.height, self.background)
+        arcade.draw_lrwh_rectangle_textured(0, 0, 8000, 8000, self.background)
         self.all_sprites.draw()
 
         if self.levent.get_x() != None:
             arcade.draw_text(self.text, self.levent.get_x(), self.levent.get_y(), arcade.color.WHITE, 20)
 
         if self.map:
-            arcade.draw_text("This is a place holder for the map", self.player.center_x, self.player.center_y, arcade.color.WHITE, 20, anchor_x = "center")
+            #arcade.draw_text("This is a place holder for the map", self.player.center_x, self.player.center_y, arcade.color.WHITE, 20, anchor_x = "center")
+            arcade.draw_lrwh_rectangle_textured(self.player.center_x-250, self.player.center_y-250, 500, 500, self.map1, 0, 167)
         
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
-        self.text = f'x Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
+        self.text = f'x' # Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
         self.player.setlastEvent(self.levent)
-        # for i in range(0, 2):
-        #     if self.levent.get_x() != None and (self.levent.get_x() <= self.player_u.center_x + i and self.levent.get_x() \
-        #         >= self.player_u.center_x - i) and(self.levent.get_y() <= self.player_u.center_y + i and self.levent.get_y() \
-        #             >= self.player_u.center_y - i):
-        #         self.player_u.change_x = 0
-        #         self.player_u.change_y = 0
         self.scroll_to_player()
 
     def scroll_to_player(self):
@@ -58,13 +53,8 @@ class Director(arcade.View):
 
     def setup(self):
         self.background = arcade.load_texture(const.RESOURCE_PATH +"images/background.png")
-        
+        self.map1 = arcade.load_texture(const.RESOURCE_PATH + "images/background1.png")
         self.player = pS.playerSprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
-
-        # self.player_u = arcade.Sprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
-        # self.player_u.center_y = 40
-        # self.player_u.left = 10
-        # self.all_sprites.append(self.player_u )
         self.player.center_y = 40
         self.player.left = 10
         self.all_sprites.append(self.player)
