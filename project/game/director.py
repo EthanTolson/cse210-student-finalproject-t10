@@ -15,6 +15,7 @@ class Director(arcade.View):
         self.levent = lastEvent.lastEvent(None, None)
         self.map = False
         self.background = None
+        self.abilitySprites = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
 
         self.camera_sprites = arcade.Camera(self.window.width, self.window.height)
@@ -38,7 +39,7 @@ class Director(arcade.View):
 
     def on_update(self, delta_time: float):
         self.all_sprites.update()
-        self.text = f'x' # Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
+        self.text = f'x # Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
         self.player.setlastEvent(self.levent)
         self.scroll_to_player()
 
@@ -55,8 +56,8 @@ class Director(arcade.View):
         self.background = arcade.load_texture(const.RESOURCE_PATH +"images/background.png")
         self.map1 = arcade.load_texture(const.RESOURCE_PATH + "images/background1.png")
         self.player = pS.playerSprite(const.RESOURCE_PATH + "images/img.png", const.SCALING/4)
-        self.player.center_y = 40
-        self.player.left = 10
+        self.player.center_y = 220
+        self.player.left = 220
         self.all_sprites.append(self.player)
 
 
