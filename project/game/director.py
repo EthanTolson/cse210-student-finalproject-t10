@@ -1,4 +1,5 @@
 import arcade
+import math
 from game import constants as const
 from game import playerSprite as pS
 from game import abilitySprite
@@ -37,7 +38,7 @@ class Director(arcade.View):
     def on_update(self, delta_time: float):
         self.all_sprites.update()
         self.text = f'x Last click x = {self.levent.get_int_x()} y = {self.levent.get_int_y()}'
-        self.player.getlastEvent(self.levent)
+        self.player.setlastEvent(self.levent)
         # for i in range(0, 2):
         #     if self.levent.get_x() != None and (self.levent.get_x() <= self.player_u.center_x + i and self.levent.get_x() \
         #         >= self.player_u.center_x - i) and(self.levent.get_y() <= self.player_u.center_y + i and self.levent.get_y() \
@@ -86,20 +87,12 @@ class Director(arcade.View):
 
     def on_mouse_press(self, x: float, y: float, button: int, modifiers: int):
         if button == arcade.MOUSE_BUTTON_RIGHT:
-            #ratio = ((x- self.player_u.center_x ) /100) / ((y- self.player_u.center_y ) /100)
-            # ratio = ((y- self.player_u.center_y ) /100) / ((x- self.player_u.center_x ) /100)
-            # if y- self.player_u.center_y > 0:
-            #     self.player_u.change_y = ratio * 10
-            # else:
-            #     self.player_u.change_y = -ratio * 10
-            
-            # if x- self.player_u.center_x > 0:
-            #     self.player_u.change_x = -ratio * 10#(x- self.player_u.center_x ) /100
-            # else:
-            #     self.player_u.change_x = ratio * 10#(x- self.player_u.center_x ) /100
+
             x = x + self.player.center_x - self.window.width/2
             y = y + self.player.center_y - self.window.height/2
-            self.player.change_x = (x- self.player.center_x ) /100
-            self.player.change_y = (y- self.player.center_y ) /100
+
+            self.player.change_x = 5 * ((x- self.player.center_x ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+            self.player.change_y = 5 * ((y- self.player.center_y ) / math.sqrt((x-self.player.center_x)**2 + (y- self.player.center_y)**2))
+
             self.levent.set_x(x)
             self.levent.set_y(y)
