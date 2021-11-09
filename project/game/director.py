@@ -57,7 +57,7 @@ class Director(arcade.View):
 
     def on_key_press(self, symbol: int, modifiers: int):
         if symbol == arcade.key.F:
-            self.set_fullscreen(not self.window.fullscreen)
+            self.window.set_fullscreen(not self.window.fullscreen)
         elif symbol == arcade.key.TAB:
             self.map = not self.map
         elif symbol == arcade.key.ESCAPE:
