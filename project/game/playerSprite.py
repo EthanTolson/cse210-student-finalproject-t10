@@ -6,6 +6,7 @@ class playerSprite(arcade.Sprite):
     def __init__(self, filename, scaling):
         super().__init__(filename, scaling)
         self.levent = lastEvent.lastEvent(None, None)
+        self.hitpoints = 50
 
     def update(self):
 
