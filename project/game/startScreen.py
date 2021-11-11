@@ -23,3 +23,7 @@ class StartScreen(arcade.View):
             game_view = director.Director()
             game_view.setup()
             self.window.show_view(game_view)
+
+    def on_key_press(self, symbol: int, modifiers: int):
+        if symbol == arcade.key.F:
+            self.window.set_fullscreen(not self.window.fullscreen)
